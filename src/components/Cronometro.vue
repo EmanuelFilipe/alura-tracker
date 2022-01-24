@@ -1,32 +1,29 @@
 <template>
   <section>
-    <strong class="display">{{ tempoDecorrido }}</strong>
+    <i class="far fa-clock"></i> {{tempoDecorrido}}
   </section>
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
+import { defineComponent } from 'vue';
+
 export default defineComponent({
-  name: "Cronometro",
+  name: 'Cronometro',
   props: {
     tempoEmSegundos: {
       type: Number,
-      default: 0,
+      default: 0
     },
   },
   computed: {
-    tempoDecorrido(): string {
-      return new Date(this.tempoEmSegundos * 1000).toISOString().substr(11, 8);
-    },
-  },
+    tempoDecorrido () : string {
+      return new Date(this.tempoEmSegundos * 1000)
+        .toISOString()
+        .substr(11, 8)
+    }
+  }
 });
-
-// export default defineComponent({
-// })
 </script>
+<style>
 
-<style scoped>
-.display {
-  color: var(--texto-primario);
-}
 </style>

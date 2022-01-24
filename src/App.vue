@@ -1,14 +1,10 @@
 <template>
-  <!-- se a propriedade 'modoEscuroAtivo' for true, irá adicionar a classe a esquerda dele. -->
-  <main
-    class="columns is-gapless is-multiline"
-    :class="{ 'modo-escuro': modoEscuroAtivo }"
-  >
+  <main class="columns is-gapless is-multiline" :class="{ 'modo-escuro' : modoEscuro}">
     <div class="column is-one-quarter">
-      <BarraLateral @aoTemaAlterado="trocarTema" />
+      <BarraLateral @aoAlterarModo="alterarModo"/>
     </div>
-    <div class="column is-three-quarter conteudo">
-      <router-view />
+    <div class="column is-three-quarters conteudo">
+      <router-view></router-view>
     </div>
   </main>
 </template>
@@ -22,24 +18,20 @@ export default defineComponent({
   components: {
     BarraLateral,
   },
-  data() {
+  data () {
     return {
-      modoEscuroAtivo: false,
-    };
+      modoEscuro: false
+    }
   },
   methods: {
-    trocarTema(modoEscuroAtivo: boolean) {
-      this.modoEscuroAtivo = modoEscuroAtivo;
-    },
-  },
+    alterarModo (modoEscuro: boolean) : void {
+      this.modoEscuro = modoEscuro
+    }
+  }
 });
 </script>
 
-<style scoped>
-.lista {
-  padding: 1.25rem;
-}
-
+<style>
 main {
   --bg-primario: #fff;
   --texto-primario: #000;
@@ -48,7 +40,9 @@ main.modo-escuro {
   --bg-primario: #2b2d42;
   --texto-primario: #ddd;
 }
-
+.lista {
+  padding: 1.25rem;
+}
 .conteudo {
   background-color: var(--bg-primario);
 }

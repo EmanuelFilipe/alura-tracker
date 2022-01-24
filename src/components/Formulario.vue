@@ -1,14 +1,10 @@
 <template>
-  <div class="box formulario">
+  <div class="box">
     <div class="columns">
-      <div
-        class="column is-5"
-        role="form"
-        aria-label="Formulário para criação de uma nova tarefa"
-      >
+      <div class="column is-5" role="form" aria-label="Formulário para iniciar uma nova tarefa">
         <input
-          type="text"
           class="input"
+          type="text"
           placeholder="Qual tarefa você deseja iniciar?"
           v-model="descricao"
         />
@@ -28,7 +24,7 @@
         </div>
       </div>
       <div class="column">
-        <Temporizador @aoTemporizadorFinalizado="finalizarTarefa" />
+        <Temporizador @aoFinalizarTarefa="salvarTarefa"/>
       </div>
     </div>
   </div>
@@ -37,43 +33,46 @@
 <script lang="ts">
 import { computed, defineComponent } from "vue";
 import Temporizador from "./Temporizador.vue";
-import { useStore } from "vuex";
-import { key } from "@/store";
+import { useStore } from 'vuex'
+
+import { key } from '@/store'
 
 export default defineComponent({
   name: "Formulario",
-  emits: ["aoSalvarTarefa"],
+  emits: ['aoSalvarTarefa'],
   components: {
     Temporizador,
   },
-  data() {
+  data () { 
     return {
-      descricao: "",
-      idProjeto: "",
-    };
+      descricao: '',
+      idProjeto: ''      
+    }
   },
   methods: {
-    finalizarTarefa(tempoDecorrido: number): void {
-      this.$emit("aoSalvarTarefa", {
-        duracaoEmSegundos: tempoDecorrido,
+    salvarTarefa (tempoEmSegundos: number) : void {    
+      this.$emit('aoSalvarTarefa', {
+        duracaoEmSegundos: tempoEmSegundos,
         descricao: this.descricao,
-        projeto: this.projetos.find((proj) => proj.id == this.idProjeto),
-      });
-      this.descricao = "";
-    },
+        projeto: this.projetos.find(proj => proj.id == this.idProjeto)
+      })
+      this.descricao = ''
+    }
   },
-  setup() {
-    const store = useStore(key);
+  setup () {
+    const store = useStore(key)
     return {
-      projetos: computed(() => store.state.projetos),
-    };
-  },
+      projetos: computed(() => store.state.projetos)
+    }
+  }
 });
 </script>
-
-<style>
-.formulario {
-  color: var(--texto-primario);
+<style scoped>
+.button {
+  margin-left: 8px;
+}
+.box {
   background-color: var(--bg-primario);
+  color: var(--texto-primario);
 }
 </style>
